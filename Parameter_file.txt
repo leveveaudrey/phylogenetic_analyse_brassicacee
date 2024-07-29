@@ -1,0 +1,23 @@
+#Species	fasta Files in Database	gff files in Database
+A.halleri	Ahalleri_765_v2.03.fa	Ahalleri_765_v2.1.0.gene_exons.gff3
+A.lyrata	Alyrata_384_v1.fa	Alyrata_384_v2.1.gene_exons.gff3
+A.thaliana	Athaliana_167_TAIR10.fa	Athaliana_167_gene_exons.gff3
+B.oleracea	Boleraceacapitata_446_v1.0.fa	Boleraceacapitata_446_v1.0.gene_exons.gff3
+B.stricta	Bstricta_278_v1.fa	Bstricta_278_v1.2.gene_exons.gff3
+B.rapa	Brapassp_trilocularisR500_795_v2.0.fa	Brapassp_trilocularisR500_795_v2.1.gene_exons.gff3
+C.amplexicaulis	Camplexicaulis_470_v1.fa	Camplexicaulis_470_v1.1.gene_exons.gff3
+D.strictus	Dstrictus_582_v2.0.fa	Dstrictus_582_v2.1.gene_exons.gff3
+D.sophioides	Dsophioides_482_v1.fa	Dsophioides_482_v1.1.gene_exons.gff3
+C.violacea	Cviolacea_585_v2.0.fa	Cviolacea_585_v2.1.gene_exons.gff3
+C.rubella	Crubella_474_v1.fa	Crubella_474_v1.1.gene_exons.gff3
+C.grandiflora	Cgrandiflora_266_v1.fa	Cgrandiflora_266_v1.1.gene_exons.gff3
+T.arvense	Tarvense_479_v1.fa	Tarvense_479_v1.1.gene_exons.gff3
+R.islandica	Rislandica_473_v1.fa	Rislandica_473_v1.1.gene_exons.gff3
+M.maritima	Mmaritima_477_v1.fa	Mmaritima_477_v1.1.gene_exons.gff3
+L.sativum	Lsativum_478_v1.fa	Lsativum_478_v1.1.gene_exons.gff3
+L.annua	Lannua_476_v1.fa	Lannua_476_v1.1.gene_exons.gff3
+I.amara	Iamara_485_v1.fa	Iamara_485_v1.1.gene_exons.gff3
+E.vesicaria	Evesicaria_487_v1.fa	Evesicaria_487_v1.1.gene_exons.gff3
+E.syriacum	Esyriacum_483_v1.fa	Esyriacum_483_v1.1.gene_exons.gff3
+E.salsugineum	Esalsugineum_173_v1.fa	Esalsugineum_173_v1.0.gene_exons.gff3
+S.parvula	Sparvula_574_v2.0.fa	Sparvula_574_v2.2.gene_exons.gff3
