@@ -8,7 +8,7 @@ All the softwares used in this pipeline are open source:
 - muscle: https://www.drive5.com/muscle/
 - blast : https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html
 
-- The database is available in zenodo : ()
+- The database is available in zenodo : (https://doi.org/10.5281/zenodo.17366489)
 
 this pipeline was use in a machine with ncpus=10, mem=800gb and scratch_local=800gb and during 48h. 
 
