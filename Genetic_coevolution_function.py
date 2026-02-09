@@ -255,7 +255,6 @@ def muscle_fasta_species(muscle,Bed):
 ## conservation estimator
       
 def conservation_estimator(ref,Bed,sister):
-    
     file1=str(ref)+"_annotation_filtered.csv"
     file1 = open(str(file1), "r")
     file1=file1.read()
@@ -276,59 +275,59 @@ def conservation_estimator(ref,Bed,sister):
     fichier.write("Gene;Chrom;Position;ref;Annotation;alt_sister;Divergence_D sister;Number_of_seq_considered;Divergence_D all")
     
     for i in Bed:
-      seq=i.split("\t")
-      Gene_name=str(seq[3])
-      Chrom=str(seq[0])
-      Start=int(seq[1])
-      End=int(seq[2])
-      x2=str(seq[3])+"_alig.fa"
-      if os.path.exists(str(x2)):
-        fasta_alig_file = open(str(x2), "r")
-        fasta_alig_file=fasta_alig_file.read()
-        fasta_alig_file = fasta_alig_file.split(">")
-        seq_ref=""
-        seq_other=[]
-        seq_sister=""
-        for k in fasta_alig_file[1:]:
-          seq=k
-          seq2=seq.split("\n")
-          name=seq2[0]
-          seq3=seq.replace(name,"")
-          seq3=seq3.replace("\n","")
-          if seq2[0]==ref:seq_ref=seq3
-          elif seq2[0]==name_sister:
-            seq_sister=seq3
-            seq_other.append(seq3)
-          else: seq_other.append(seq3)
+        seq=i.split("\t")
+        Gene_name=str(seq[3])
+        Chrom=str(seq[0])
+        Start=int(seq[1])
+        End=int(seq[2])
+        x2=str(seq[3])+"_alig.fa"
+        if os.path.exists(str(x2)):
+            fasta_alig_file = open(str(x2), "r")
+            fasta_alig_file=fasta_alig_file.read()
+            fasta_alig_file = fasta_alig_file.split(">")
+            seq_ref=""
+            seq_other=[]
+            seq_sister=""
+            for k in fasta_alig_file[1:]:
+                seq=k
+                seq2=seq.split("\n")
+                name=seq2[0]
+                seq3=seq.replace(name,"")
+                seq3=seq3.replace("\n","")
+                if seq2[0]==ref:seq_ref=seq3
+                elif seq2[0]==name_sister:
+                    seq_sister=seq3
+                    seq_other.append(seq3)
+                else: seq_other.append(seq3)
           
         Position=Start
         for j in range(0,len(seq_ref)):
-          SEQ=str(seq_ref[j])
-          if SEQ!="-":
-            annot="Other"
-            search_annotation=str(Chrom)+"_"+str(Position)
-            if search_annotation in dict_annotation2:
-              x=dict_annotation2[search_annotation]
-              if x.count("3")!=0:annot="0fold"
-              elif x.count("3")==0 and x.count("4")!=0:annot="4fold"
-            fichier.write("\n"+str(Gene_name)+";"+str(Chrom)+";"+str(Position)+";"+str(SEQ)+";"+str(annot))
+            SEQ=str(seq_ref[j])
+            if SEQ!="-":
+                annot="Other"
+                search_annotation=str(Chrom)+"_"+str(Position)
+                if search_annotation in dict_annotation2:
+                    x=dict_annotation2[search_annotation]
+                    if x.count("3")!=0:annot="0fold"
+                    elif x.count("3")==0 and x.count("4")!=0:annot="4fold"
+                fichier.write("\n"+str(Gene_name)+";"+str(Chrom)+";"+str(Position)+";"+str(SEQ)+";"+str(annot))
           
             if seq_sister!="":
-              if str(seq_sister[j])!=SEQ:
-                if  str(seq_sister[j])!="-": fichier.write(";"+str(seq_sister[j])+";1")
-                elif  str(seq_sister[j])=="-": fichier.write(";"+str(seq_sister[j])+";NA")
-              if str(seq_sister[j])==SEQ:fichier.write(";"+str(seq_sister[j])+";0")
+                if str(seq_sister[j])!=SEQ:
+                    if  str(seq_sister[j])!="-": fichier.write(";"+str(seq_sister[j])+";1")
+                    elif  str(seq_sister[j])=="-": fichier.write(";"+str(seq_sister[j])+";NA")
+                if str(seq_sister[j])==SEQ:fichier.write(";"+str(seq_sister[j])+";0")
             if seq_sister=="":fichier.write(";NA;NA")
             
             D_pos=[]
             for other in seq_other:
-              if other[j]!=SEQ and str(other[j])!="-":D_pos.append(1)
-              elif other[j]!=SEQ:D_pos.append(0)
+                if other[j]!=SEQ and str(other[j])!="-":D_pos.append(1)
+                elif other[j]!=SEQ:D_pos.append(0)
             if len(D_pos)==0: D_pos="NA"
             elif len(D_pos)!=0: D_pos=sum(D_pos)/len(D_pos)
             fichier.write(";"+str(len(seq_other))+";"+str(D_pos))
             Position=Position+1
-      print(Gene_name)
+        print(Gene_name)
     fichier.close()
     
     file1=str(ref)+"_conservation_by_pos_all.csv"
@@ -344,114 +343,119 @@ def conservation_estimator(ref,Bed,sister):
     dict_annotation_gene={}
 
     for line in file1[1:]:
-      if line!="":
-        line_splitted = line.split(";")
-        test2=str(line_splitted[0])
-        annot=str(line_splitted[4])
-        sister=str(line_splitted[6])
-        all=str(line_splitted[8])
-        nb=int(line_splitted[7])
+        if line!="":
+            line_splitted = line.split(";")
+            test2=str(line_splitted[0])
+            annot=str(line_splitted[4])
+            sister=str(line_splitted[6])
+            all=str(line_splitted[8])
+            nb=int(line_splitted[7])
         
         if test2 not in dict_annotation_gene.keys():
-          if sister != "NA" and nb>0  :dict_annotation_gene[test2]=[1,nb]
-          elif sister == "NA" and nb>0  :dict_annotation_gene[test2]=[0,nb]
-          elif sister == "NA" and nb==0  :dict_annotation_gene[test2]=[0,0]
+            if sister != "NA" and nb>0  :dict_annotation_gene[test2]=[1,nb]
+            elif sister == "NA" and nb>0  :dict_annotation_gene[test2]=[0,nb]
+            elif sister == "NA" and nb==0  :dict_annotation_gene[test2]=[0,0]
         
         if sister != "NA":
-          x=[float(line_splitted[6])]
-          if test2 in dict_annotation2.keys():
-            x=dict_annotation2[test2]
-            x.append(float(line_splitted[6]))
-          dict_annotation2[test2]=x
-          if annot=="0fold":
             x=[float(line_splitted[6])]
-            if test2 in dict_annotation_NS.keys():
-              x=dict_annotation_NS[test2]
-              x.append(float(line_splitted[6]))
-            dict_annotation_NS[test2]=x
-          if annot=="4fold":
-            x=[float(line_splitted[6])]
-            if test2 in dict_annotation_S.keys():
-              x=dict_annotation_S[test2]
-              x.append(float(line_splitted[6]))
-            dict_annotation_S[test2]=x
+            if test2 in dict_annotation2.keys():
+                x=dict_annotation2[test2]
+                x.append(float(line_splitted[6]))
+            dict_annotation2[test2]=x
+            if annot=="0fold":
+                x=[float(line_splitted[6])]
+                if test2 in dict_annotation_NS.keys():
+                  x=dict_annotation_NS[test2]
+                  x.append(float(line_splitted[6]))
+                dict_annotation_NS[test2]=x
+            if annot=="4fold":
+                x=[float(line_splitted[6])]
+                if test2 in dict_annotation_S.keys():
+                  x=dict_annotation_S[test2]
+                  x.append(float(line_splitted[6]))
+                dict_annotation_S[test2]=x
             
         if all != "NA":
-          x=[float(line_splitted[8])]
-          if test2 in dict_annotation_all.keys():
-            x=dict_annotation_all[test2]
-            x.append(float(line_splitted[8]))
-          dict_annotation_all[test2]=x
-          if annot=="0fold":
             x=[float(line_splitted[8])]
-            if test2 in dict_annotation_NS_all.keys():
-              x=dict_annotation_NS_all[test2]
-              x.append(float(line_splitted[8]))
-            dict_annotation_NS_all[test2]=x
-          if annot=="4fold":
-            x=[float(line_splitted[8])]
-            if test2 in dict_annotation_S_all.keys():
-              x=dict_annotation_S_all[test2]
-              x.append(float(line_splitted[8]))
-            dict_annotation_S_all[test2]=x
+            if test2 in dict_annotation_all.keys():
+                x=dict_annotation_all[test2]
+                x.append(float(line_splitted[8]))
+            dict_annotation_all[test2]=x
+            if annot=="0fold":
+                x=[float(line_splitted[8])]
+                if test2 in dict_annotation_NS_all.keys():
+                  x=dict_annotation_NS_all[test2]
+                  x.append(float(line_splitted[8]))
+                dict_annotation_NS_all[test2]=x
+            if annot=="4fold":
+                x=[float(line_splitted[8])]
+                if test2 in dict_annotation_S_all.keys():
+                  x=dict_annotation_S_all[test2]
+                  x.append(float(line_splitted[8]))
+                dict_annotation_S_all[test2]=x
     
     print("annotok")
     
     fichier=open(str(ref)+"_conservation_by_gene_all.csv", "w")
-    fichier.write("Gene;Chrom;Start;End;Divergence_D sister;Divergence_DNS sister;Divergence_DS sister;Number_of_seq_considered;Divergence_D all;Divergence_DNS all;Divergence_DS all")
+    fichier.write("Gene;Chrom;Start;End;Size;Divergence_D sister;Divergence_DNS sister;Divergence_DS sister;Number_of_seq_considered;Divergence_D all;Divergence_DNS all;Divergence_DS all;nb_ns;nb_s")
     
     for i in Bed:
-      seq=i.split("\t")
-      Gene_name=str(seq[3])
-      Chrom=str(seq[0])
-      Start=int(seq[1])
-      End=int(seq[2])
-      fichier.write("\n"+str(Gene_name)+";"+str(Chrom)+";"+str(Start)+";"+str(End))
+        seq=i.split("\t")
+        Gene_name=str(seq[3])
+        Chrom=str(seq[0])
+        Start=int(seq[1])
+        End=int(seq[2])
+        fichier.write("\n"+str(Gene_name)+";"+str(Chrom)+";"+str(Start)+";"+str(End)+";"str(End-Start))
       
-      #sister
-      D="NA"
-      DNS="NA"
-      DS="NA"
-      if Gene_name in dict_annotation2.keys() :
-        x=dict_annotation2[Gene_name]
-        if len(x)>0:
-          D=sum(x)/len(x)
-      if Gene_name in dict_annotation_NS.keys() :
-        x=dict_annotation_NS[Gene_name]
-        if len(x)>0:
-          DNS=sum(x)/len(x)
-      if Gene_name in dict_annotation_S.keys() :
-        x=dict_annotation_S[Gene_name]
-        if len(x)>0:
-          DS=sum(x)/len(x)
-      fichier.write(";"+str(D)+";"+str(DNS)+";"+str(DS))
+        #sister
+        D="NA"
+        DNS="NA"
+        DS="NA"
+        nb_ns=0
+        nb_s=0
+        if Gene_name in dict_annotation2.keys() :
+            x=dict_annotation2[Gene_name]
+            if len(x)>0:
+                D=sum(x)/len(x)
+        if Gene_name in dict_annotation_NS.keys() :
+            x=dict_annotation_NS[Gene_name]
+            if len(x)>0:
+                DNS=sum(x)/len(x)
+                nb_ns=len(x)
+        if Gene_name in dict_annotation_S.keys() :
+            x=dict_annotation_S[Gene_name]
+            if len(x)>0:
+                DS=sum(x)/len(x)
+                nb_s=len(x)
+        fichier.write(";"+str(D)+";"+str(DNS)+";"+str(DS))
       
-      # all
-      nb=0
-      if Gene_name in dict_annotation_gene.keys() :
-        x=dict_annotation_gene[Gene_name]
-        if x[1]>0:
-          nb=x[1]
-      fichier.write(";"+str(nb))
-      D="NA"
-      DNS="NA"
-      DS="NA"
-      if Gene_name in dict_annotation_all.keys() :
-        x=dict_annotation_all[Gene_name]
-        #print(x)
-        if len(x)>0:
-          D=sum(x)/len(x)
-      if Gene_name in dict_annotation_NS_all.keys() :
-        x=dict_annotation_NS_all[Gene_name]
-        #print(x)
-        if len(x)>0:
-          DNS=sum(x)/len(x)
-      if Gene_name in dict_annotation_S_all.keys() :
-        x=dict_annotation_S_all[Gene_name]
-        #print(x)
-        if len(x)>0:
-          DS=sum(x)/len(x)
-      fichier.write(";"+str(D)+";"+str(DNS)+";"+str(DS))
+        # all
+        nb=0
+        if Gene_name in dict_annotation_gene.keys() :
+            x=dict_annotation_gene[Gene_name]
+            if x[1]>0:
+              nb=x[1]
+        fichier.write(";"+str(nb))
+        D="NA"
+        DNS="NA"
+        DS="NA"
+        if Gene_name in dict_annotation_all.keys() :
+            x=dict_annotation_all[Gene_name]
+            #print(x)
+            if len(x)>0:
+                D=sum(x)/len(x)
+        if Gene_name in dict_annotation_NS_all.keys() :
+            x=dict_annotation_NS_all[Gene_name]
+            #print(x)
+            if len(x)>0:
+                DNS=sum(x)/len(x)
+        if Gene_name in dict_annotation_S_all.keys() :
+            x=dict_annotation_S_all[Gene_name]
+            #print(x)
+            if len(x)>0:
+                DS=sum(x)/len(x)
+        fichier.write(";"+str(D)+";"+str(DNS)+";"+str(DS))
+        fichier.write(";"+str(nb_ns)+";"+str(nb_s))
 
       print(Gene_name)
     fichier.close()
